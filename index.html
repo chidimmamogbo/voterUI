@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voter UI</title>
+  <link href="/Tailwind/src/output.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col justify-between">
+
+  <!-- Header -->
+  <header class="bg-blue-900 text-white shadow-lg relative">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-lg md:text-2xl font-bold">AFRICAN PLAN FOUNDATION</h1>
+      <nav class="hidden md:block">
+        <ul class="flex gap-8">
+          <li><a href="#" class="hover:underline">Home</a></li>
+          <li><a href="#" class="hover:underline">Vote</a></li>
+          <li><a href="#" class="hover:underline">Results</a></li>
+        </ul>
+      </nav>
+      <button type="button" command="--toggle" commandfor="mobile-menu" class="md:hidden p-2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="size-7 in-aria-expanded:hidden">
+          <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" class="size-7 not-in-aria-expanded:hidden">
+          <path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu DropDown -->
+  <el-disclosure id="mobile-menu" hidden class="md:hidden bg-blue-900 text-white">
+    <a class="block px-5 py-4 text-white hover:bg-blue-800" href="#">Home</a>
+    <a class="block px-5 py-4 text-white hover:bg-blue-800" href="#">Vote</a>
+    <a class="block px-5 py-4 text-white hover:bg-blue-800" href="#">Results</a>
+  </el-disclosure>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-7xl mx-auto w-full px-4 py-10">
+    <!-- Voting Card -->
+    <div class="max-w-lg mx-auto bg-white rounded-xl shadow-lg p-8">
+      <h2 class="text-2xl font-bold text-center text-blue-900 mb-2">Cast Your Vote</h2>
+      <p class="text-center text-gray-600 mb-8">
+        Voters Count: <span id="voterProgress" class="font-bold text-blue-900">0</span> / 20
+      </p>
+
+      <!-- Form -->
+      <form id="voteForm" class="space-y-5">
+        <div>
+          <label class="block mb-2 font-medium">Full Name</label>
+          <input id="voterName" type="text" required placeholder="Enter your full name"
+            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-700 outline-none" />
+        </div>
+
+        <div>
+          <label class="block mb-2 font-medium">Select Candidate</label>
+          <select id="candidateSelect" required
+            class="w-full border rounded-lg p-3 focus:ring-2 focus:ring-blue-700 outline-none">
+            <option value="" selected disabled>Select Candidate</option>
+            <option value="Kosisochukwu">Kosisochukwu</option>
+            <option value="Austin">Austin</option>
+          </select>
+        </div>
+
+        <button id="submitBtn" type="submit"
+          class="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 rounded-lg font-semibold transition">
+          Submit Vote
+        </button>
+      </form>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="mt-12 flex flex-col md:flex-row justify-between gap-6">
+      <div class="flex items-end">
+        <button id="checkResult" command="show-modal" commandfor="winner-dialog"
+          class="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg font-semibold shadow">
+          View the Winner
+        </button>
+      </div>
+
+      <!-- Vote Count Block-->
+      <div class="bg-white shadow-lg rounded-xl p-6 w-full md:w-80">
+        <h3 class="text-xl font-bold mb-4 text-blue-900">Vote Count</h3>
+
+        <div id="results" class="space-y-3">
+          <div class="flex justify-between">
+            <span>Kosisochukwu</span>
+            <span id="candidate-Kosisochukwu" class="font-bold text-gray-800">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Austin</span>
+            <span id="candidate-Austin" class="font-bold text-gray-800">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white text-center py-4 mt-10">
+    © 2026 African Plan Foundation. All Rights Reserved.
+  </footer>
+
+  <!-- Winner Modal -->
+  <el-dialog>
+    <dialog id="winner-dialog" aria-labelledby="winner-title"
+      class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+      <el-dialog-backdrop
+        class="fixed inset-0 bg-black/60 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"></el-dialog-backdrop>
+      <div tabindex="0" class="flex min-h-full items-center justify-center p-4 focus:outline-none">
+        <el-dialog-panel
+          class="relative w-full max-w-md overflow-hidden rounded-xl bg-white shadow-2xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:scale-95">
+
+          <div class="bg-blue-900 px-6 py-4">
+            <h2 id="winner-title" class="text-xl font-bold text-white">🏆 Election Winner</h2>
+          </div>
+
+          <div class="px-6 py-6">
+            <p id="noVotesMessage" class="text-red-500 font-medium text-center hidden mb-2">No votes have been recorded
+              yet!</p>
+
+            <div id="winnerContent">
+              <p class="text-gray-600 text-center">The winner of the election is</p>
+              <h3 id="winnerName" class="mt-4 text-center text-3xl font-bold text-green-700">-</h3>
+              <p class="mt-2 text-center text-gray-500">
+                Total Votes: <span id="winnerVotes" class="font-semibold">0</span>
+              </p>
+            </div>
+
+            <div id="voteBreakdown" class="mt-4 pt-4 border-t text-sm text-gray-600 space-y-1 text-center"></div>
+          </div>
+
+          <div class="bg-gray-100 px-6 py-4 flex justify-end">
+            <button command="close" commandfor="winner-dialog"
+              class="rounded-md bg-blue-900 px-5 py-2 font-semibold text-white hover:bg-blue-800">
+              Close
+            </button>
+          </div>
+
+        </el-dialog-panel>
+      </div>
+    </dialog>
+  </el-dialog>
+
+  <!-- Point to our compiled javascript file -->
+  <script src="/dist/election.js" type="module"></script>
+
+</body>
+
+</html>
